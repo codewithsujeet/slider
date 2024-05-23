@@ -1,0 +1,52 @@
+import {StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import Slider from '@react-native-community/slider';
+const SLIDER_WIDTH = 300;
+const THUMB_WIDTH = 20;
+
+export default function Slider() {
+  const [sliderValue, setSliderValue] = React.useState(20);
+
+  const calculateThumbPosition = () => {
+    return (sliderValue / 100) * (SLIDER_WIDTH - THUMB_WIDTH);
+  };
+  return (
+    <View style={styles.sliderContainer}>
+      <Slider
+        style={styles.slider}
+        minimumValue={0}
+        maximumValue={100}
+        value={sliderValue}
+        onValueChange={value => setSliderValue(Math.round(value))}
+        disabled={false}
+        minimumTrackTintColor="#3B72CD"
+        maximumTrackTintColor="#d3d3d3"
+        thumbTintColor="#3B72CD"
+      />
+      <View style={[styles.valueContainer, {left: calculateThumbPosition()}]}>
+        <Text style={styles.valueText}>{sliderValue}%</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  sliderContainer: {
+    width: SLIDER_WIDTH,
+    alignItems: 'center',
+    position: 'relative',
+  },
+  slider: {
+    width: SLIDER_WIDTH,
+    height: 40,
+  },
+  valueContainer: {
+    position: 'absolute',
+    bottom: 35,
+  },
+  valueText: {
+    fontSize: 18,
+    color: '#000',
+    fontWeight: '700',
+  },
+});
